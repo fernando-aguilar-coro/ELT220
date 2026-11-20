@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cocina de inducción</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2'><circle cx='12' cy='12' r='10'/><path d='M12 2a10 10 0 0 1 10 10'/></svg>" />
+</head>
+
+<body>
+  <div id="app">
+    <header class="product-header">
+      <a class="brand" href="./index.html">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="9" />
+            <circle cx="12" cy="12" r="4" />
+          </svg>
+        </span>
+        <span>Cocina de inducción</span>
+      </a>
+      <nav class="product-nav" aria-label="Secciones">
+        <a class="nav-link" href="./simulacion.html">Simulador</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Caso · acero 430</p>
+          <h1>Sistema de calentamiento inductivo mediante campos magnéticos de
+            alta frecuencia.</h1>
+          <p class="lede">
+            Este modelo es un solo caso: una sartén de acero inoxidable ferrítico sobre una bobina plana. Las líneas
+            azules son el campo magnético en movimiento. El anillo naranja es el calor que ese campo induce en el metal.
+          </p>
+          <ul class="spec-row">
+            <li>
+              <strong>25 kHz · 16,5 A</strong>
+              <span>corriente en la bobina</span>
+            </li>
+            <li>
+              <strong>20 vueltas</strong>
+              <span>de 25 mm a 100 mm</span>
+            </li>
+            <li>
+              <strong>Vidrio de 7 mm</strong>
+              <span>base de acero de 110 mm</span>
+            </li>
+          </ul>
+          <a class="cta" href="./simulacion.html">Simulador</a>
+        </div>
+
+        <div class="stage-card">
+          <div id="productStage" class="product-stage"></div>
+          <div class="stage-controls">
+            <label class="explode-label" for="inputExploded">
+              Ver por dentro
+              <input type="range" id="inputExploded" min="0" max="1" step="0.01" value="0" />
+              <span id="valExploded">0%</span>
+            </label>
+            <p id="explodeCaption" class="explode-caption">
+              Conjunto cerrado. La vitrocerámica queda entre la bobina y la base, y el anillo de calor ya está en el
+              metal.
+            </p>
+            <p class="stage-hint">Líneas azules: campo magnético. Anillo naranja: calor en el acero. Arrastra para
+              girar.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="anatomy-title">
+        <div class="section-head">
+          <p>Cada capa del modelo tiene un trabajo. Separa el conjunto con «Ver por dentro» y compáralo con estas
+            piezas.</p>
+        </div>
+        <div class="anatomy-grid">
+          <article class="anatomy-card">
+            <span class="swatch swatch-ferrite" aria-hidden="true"></span>
+            <h3>Barras de ferrita</h3>
+            <p>Van debajo de la bobina. Recogen el campo que se escaparía hacia abajo y lo devuelven hacia el fondo de
+              la olla.</p>
+          </article>
+          <article class="anatomy-card">
+            <span class="swatch swatch-coil" aria-hidden="true"></span>
+            <h3>Bobina de cobre</h3>
+            <p>Espiral plana por la que circula la corriente alterna. Es la pieza que genera el campo. Ella misma casi
+              no se calienta.</p>
+          </article>
+          <article class="anatomy-card">
+            <span class="swatch swatch-glass" aria-hidden="true"></span>
+            <h3>Vidrio vitrocerámico</h3>
+            <p>Sostiene el recipiente y deja pasar el campo. Permanece frío salvo por el contacto con la olla ya
+              caliente.</p>
+          </article>
+          <article class="anatomy-card">
+            <span class="swatch swatch-pan" aria-hidden="true"></span>
+            <h3>Base del recipiente</h3>
+            <p>Aquí aparece el anillo de calor. La corriente inducida circula en el metal y se disipa justo donde se
+              cocina.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="how-title">
+        <div class="section-head">
+          <h2 id="how-title">Cómo cocina</h2>
+          <p>Cuatro pasos, en el orden en que ocurren dentro del aparato.</p>
+        </div>
+        <ol class="steps">
+          <li>
+            <h3>El campo atraviesa el vidrio</h3>
+            <p>La corriente de la bobina, cerca de 25 kHz, produce un campo magnético que oscila y sube en vertical a
+              través de la placa.</p>
+          </li>
+          <li>
+            <h3>El fondo conduce corriente</h3>
+            <p>Ese campo cambiante induce corrientes cerradas en la base metálica. No hace falta que la placa toque una
+              resistencia al rojo.</p>
+          </li>
+          <li>
+            <h3>La corriente se vuelve calor</h3>
+            <p>El metal opone resistencia a esa corriente y se calienta en un anillo, el mismo que se ve en el modelo.
+              La olla es el elemento calefactor.</p>
+          </li>
+          <li>
+            <h3>El acero funciona; el aluminio, no</h3>
+            <p>Acero e hierro concentran el campo y disipan bien. Aluminio y cobre dejan pasar la corriente con tanta
+              facilidad que casi no generan calor. Por eso la cocina los rechaza.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="close">
+        <div>
+          <h2>Cambia el material, la corriente y la frecuencia.</h2>
+          <p>En el laboratorio el mismo modelo responde a los controles, y se ven el campo, la bobina, el calor y el
+            circuito.</p>
+        </div>
+        <a class="cta" href="./simulacion.html">Simulador</a>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./src/dashboard.ts"></script>
+</body>
+
+</html>
