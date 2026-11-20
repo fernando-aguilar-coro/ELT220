@@ -85,14 +85,14 @@ export class FieldCanvasRenderer {
         }
       }
     } else {
-      ctx.fillStyle = '#0f172a';
+      ctx.fillStyle = '#e8edf3';
       ctx.fillRect(45, 20, width - 60, height - 55);
     }
 
     // 2. Draw Vector Arrows
     if (this.showVectors) {
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.strokeStyle = 'rgba(15, 23, 42, 0.55)';
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.75)';
       ctx.lineWidth = 1.0;
 
       const stepR = 3;
@@ -192,7 +192,7 @@ export class FieldCanvasRenderer {
 
     // 4. Annotations & Labels
     if (this.showAnnotations) {
-      ctx.fillStyle = '#f8fafc';
+      ctx.fillStyle = '#0f172a';
       ctx.font = 'bold 11px system-ui, sans-serif';
 
       ctx.fillText(`Cookware: ${res.material.name} (z = ${(res.operating.z_pan * 1e3).toFixed(1)} mm)`, px0 + 10, pyTop - 6);
@@ -212,8 +212,8 @@ export class FieldCanvasRenderer {
     toScreenX: (r: number) => number,
     toScreenY: (z: number) => number
   ) {
-    ctx.strokeStyle = '#475569';
-    ctx.fillStyle = '#94a3b8';
+    ctx.strokeStyle = '#64748b';
+    ctx.fillStyle = '#475569';
     ctx.font = '10px monospace';
     ctx.lineWidth = 1;
 

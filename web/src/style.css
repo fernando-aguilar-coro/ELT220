@@ -1,20 +1,22 @@
-/* Modern Electromagnetics Dashboard Theme */
+/* Simulador Electromagnético — Tema Claro */
 :root {
   --app-scale: 1;
-  --bg-primary: #0a0f1d;
-  --bg-secondary: #111827;
-  --bg-card: #1e293b;
-  --bg-card-hover: #26334d;
-  --border-color: #334155;
+  --bg-primary: #f2f5f8;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --border-color: rgba(15, 23, 42, 0.1);
   --border-focus: #f59e0b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
   --accent-amber: #f59e0b;
-  --accent-blue: #38bdf8;
-  --accent-green: #10b981;
-  --accent-red: #ef4444;
-  --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --accent-amber-strong: #b45309;
+  --accent-blue: #0284c7;
+  --accent-green: #16a34a;
+  --accent-red: #dc2626;
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
 }
 
 * {
@@ -25,7 +27,9 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--bg-primary);
+  background:
+    radial-gradient(1000px 500px at 90% -10%, rgba(245, 158, 11, 0.1), transparent 55%),
+    var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.5;
   min-height: 100vh;
@@ -44,11 +48,12 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0.85rem 1.75rem;
-  background-color: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.85);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 50;
+  backdrop-filter: blur(12px);
 }
 
 .header-branding {
@@ -73,6 +78,7 @@ body {
 }
 
 .header-branding h1 {
+  font-family: var(--font-display);
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -93,7 +99,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: var(--bg-card);
+  background-color: var(--bg-secondary);
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
   border: 1px solid var(--border-color);
@@ -103,7 +109,7 @@ body {
 .quick-preset-badge select {
   background: transparent;
   border: none;
-  color: var(--accent-amber);
+  color: var(--accent-amber-strong);
   font-weight: 600;
   cursor: pointer;
   outline: none;
@@ -147,7 +153,7 @@ body {
 
 /* Sidebar */
 .sidebar {
-  background-color: var(--bg-secondary);
+  background-color: rgba(255, 255, 255, 0.7);
   border-right: 1px solid var(--border-color);
   padding: 1.25rem;
   display: flex;
@@ -155,12 +161,14 @@ body {
   gap: 1.25rem;
   overflow-y: auto;
   max-height: calc(100vh - 65px);
+  backdrop-filter: blur(10px);
 }
 
 .control-card {
   background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
+  border-radius: 12px;
   padding: 1rem;
 }
 
@@ -172,6 +180,7 @@ body {
 }
 
 .card-header h3 {
+  font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -185,17 +194,17 @@ body {
   text-transform: uppercase;
 }
 .badge-success {
-  background-color: rgba(16, 185, 129, 0.2);
+  background-color: rgba(22, 163, 74, 0.12);
   color: var(--accent-green);
   border: 1px solid var(--accent-green);
 }
 .badge-warning {
-  background-color: rgba(245, 158, 11, 0.2);
-  color: var(--accent-amber);
+  background-color: rgba(245, 158, 11, 0.14);
+  color: var(--accent-amber-strong);
   border: 1px solid var(--accent-amber);
 }
 .badge-danger {
-  background-color: rgba(239, 68, 68, 0.2);
+  background-color: rgba(220, 38, 38, 0.1);
   color: var(--accent-red);
   border: 1px solid var(--accent-red);
 }
@@ -213,7 +222,7 @@ body {
 }
 
 .val-pill {
-  color: var(--accent-amber);
+  color: var(--accent-amber-strong);
   font-weight: 600;
 }
 
@@ -253,7 +262,7 @@ input[type="range"] {
 }
 
 .mat-info-box {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(15, 23, 42, 0.04);
   border-radius: 6px;
   padding: 0.6rem 0.75rem;
   margin-top: 0.75rem;
@@ -274,7 +283,7 @@ input[type="range"] {
   color: var(--text-primary);
 }
 .highlight-val {
-  color: var(--accent-amber) !important;
+  color: var(--accent-amber-strong) !important;
 }
 
 .custom-fields {
@@ -306,7 +315,8 @@ input[type="range"] {
 .metric-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  border-radius: 12px;
   padding: 0.9rem 1.1rem;
   position: relative;
   overflow: hidden;
@@ -322,7 +332,7 @@ input[type="range"] {
 .metric-card.primary::after { background-color: var(--accent-amber); }
 .metric-card.success::after { background-color: var(--accent-green); }
 .metric-card.warning::after { background-color: var(--accent-blue); }
-.metric-card.info::after { background-color: #818cf8; }
+.metric-card.info::after { background-color: #6366f1; }
 
 .metric-title {
   font-size: 0.75rem;
@@ -333,8 +343,9 @@ input[type="range"] {
 }
 
 .metric-value {
+  font-family: var(--font-display);
   font-size: 1.6rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text-primary);
   margin: 0.2rem 0;
 }
@@ -368,10 +379,10 @@ input[type="range"] {
 }
 .tab-btn:hover {
   color: var(--text-primary);
-  background-color: var(--bg-card);
+  background-color: var(--bg-card-hover);
 }
 .tab-btn.active {
-  color: var(--accent-amber);
+  color: var(--accent-amber-strong);
   background-color: var(--bg-card);
   border-bottom: 2px solid var(--accent-amber);
 }
@@ -387,7 +398,8 @@ input[type="range"] {
 .canvas-wrapper {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
+  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -396,11 +408,12 @@ input[type="range"] {
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1rem;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(15, 23, 42, 0.03);
   border-bottom: 1px solid var(--border-color);
 }
 
 .toolbar-title {
+  font-family: var(--font-display);
   font-size: 0.9rem;
   font-weight: 700;
 }
@@ -425,7 +438,7 @@ input[type="range"] {
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: #030712;
+  background-color: #eef2f7;
 }
 
 .center-canvas {
@@ -442,7 +455,7 @@ canvas {
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1.25rem;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(15, 23, 42, 0.03);
   border-top: 1px solid var(--border-color);
   font-size: 0.8rem;
 }
@@ -474,26 +487,26 @@ canvas {
   border-radius: 2px;
   vertical-align: middle;
 }
-.coil-dot { background-color: #f59e0b; border-radius: 50%; }
-.glass-bar { background-color: rgba(6, 182, 212, 0.8); }
+.coil-dot { background-color: #d97706; border-radius: 50%; }
+.glass-bar { background-color: rgba(2, 132, 199, 0.8); }
 .pan-bar { background-color: #ef4444; }
-.ferrite-bar { background-color: #6b7280; }
+.ferrite-bar { background-color: #64748b; }
 
 .field-tooltip {
   position: fixed;
-  background-color: rgba(15, 23, 42, 0.95);
-  border: 1px solid var(--border-focus);
-  color: #fff;
+  background-color: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--accent-amber);
+  color: var(--text-primary);
   padding: 0.45rem 0.75rem;
   border-radius: 6px;
   font-size: 0.75rem;
   pointer-events: none;
   z-index: 100;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
 }
 .tooltip-title {
   font-weight: 700;
-  color: var(--accent-amber);
+  color: var(--accent-amber-strong);
   margin-bottom: 0.2rem;
 }
 
@@ -502,7 +515,7 @@ canvas {
   font-size: 0.85rem;
   color: var(--text-secondary);
   border-top: 1px solid var(--border-color);
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(15, 23, 42, 0.03);
 }
 
 /* Charts Layout */
@@ -515,13 +528,15 @@ canvas {
 .chart-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.05);
+  border-radius: 12px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
 }
 
 .chart-card h4 {
+  font-family: var(--font-display);
   font-size: 0.9rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
@@ -545,7 +560,7 @@ canvas {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.6rem;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(15, 23, 42, 0.04);
   padding: 0.85rem;
   border-radius: 6px;
   margin-bottom: 1rem;
@@ -562,7 +577,7 @@ canvas {
 }
 
 .callout-box {
-  background-color: rgba(239, 68, 68, 0.1);
+  background-color: rgba(220, 38, 38, 0.06);
   border-left: 3px solid var(--accent-red);
   padding: 0.75rem;
   border-radius: 4px;
@@ -588,19 +603,21 @@ canvas {
 .theory-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.05);
+  border-radius: 12px;
   padding: 1.25rem;
 }
 
 .theory-card h4 {
+  font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--accent-amber);
+  color: var(--accent-amber-strong);
   margin-bottom: 0.75rem;
 }
 
 .math-block {
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(15, 23, 42, 0.04);
   padding: 0.85rem;
   border-radius: 6px;
   margin-bottom: 0.75rem;
@@ -648,23 +665,24 @@ html.app-scaled .content-panel {
 
 /* Hero Teórico & Explicación */
 .intro-hero-box {
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+  background: linear-gradient(145deg, #ffffff, #f1f5f9);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 1.5rem 1.75rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
 }
 
 .intro-hero-box h2 {
+  font-family: var(--font-display);
   font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--accent-amber);
+  font-weight: 700;
+  color: var(--accent-amber-strong);
   margin-bottom: 0.75rem;
 }
 
 .lead-text {
   font-size: 0.95rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.65;
   margin-bottom: 1.5rem;
 }
@@ -676,12 +694,13 @@ html.app-scaled .content-panel {
 }
 
 .flow-card {
-  background-color: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 10px;
   padding: 1rem;
   position: relative;
   transition: transform 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
 }
 .flow-card:hover {
   transform: translateY(-2px);
@@ -692,7 +711,7 @@ html.app-scaled .content-panel {
   width: 26px;
   height: 26px;
   background-color: var(--accent-amber);
-  color: #000;
+  color: #1c1917;
   font-weight: 800;
   font-size: 0.85rem;
   border-radius: 50%;
@@ -703,6 +722,7 @@ html.app-scaled .content-panel {
 }
 
 .flow-card h4 {
+  font-family: var(--font-display);
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--text-primary);

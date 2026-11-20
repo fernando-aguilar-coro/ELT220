@@ -38,7 +38,7 @@ export class SpiralCanvasRenderer {
     ctx.setLineDash([]);
 
     // 2. Draw Radial Ferrite Bars (underneath, 8 radial bars)
-    ctx.fillStyle = 'rgba(75, 85, 99, 0.45)';
+    ctx.fillStyle = 'rgba(100, 116, 139, 0.3)';
     ctx.strokeStyle = '#6b7280';
     ctx.lineWidth = 1.0;
     const numBars = 8;
@@ -82,7 +82,7 @@ export class SpiralCanvasRenderer {
     ctx.lineCap = 'round';
     ctx.stroke();
 
-    ctx.strokeStyle = '#fef3c7';
+    ctx.strokeStyle = '#b45309';
     ctx.lineWidth = 1.8;
     ctx.stroke();
 
@@ -104,7 +104,7 @@ export class SpiralCanvasRenderer {
     ctx.fill();
 
     // 5. Annotations
-    ctx.fillStyle = '#f8fafc';
+    ctx.fillStyle = '#0f172a';
     ctx.font = '11px system-ui, sans-serif';
     ctx.fillText(`Cookware Base Perimeter (Ø ${(res.operating.pan_radius * 2e3).toFixed(0)} mm)`, centerX - 85, centerY - panDrawRadius - 8);
     ctx.fillText(`Coil Outer Ø ${(res.coil.r_out * 2e3).toFixed(0)} mm`, outerX + 10, outerY + 4);

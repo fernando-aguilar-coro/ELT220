@@ -61,7 +61,7 @@ export class ChartsManager {
         datasets: [{
           label: 'Densidad Superficial |K_θ(r)| [kA/m]',
           data: [],
-          borderColor: '#38bdf8',
+          borderColor: '#0284c7',
           backgroundColor: 'rgba(56, 189, 248, 0.15)',
           fill: true,
           tension: 0.35,
@@ -72,17 +72,17 @@ export class ChartsManager {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { labels: { color: '#e2e8f0' } } },
+        plugins: { legend: { labels: { color: '#334155' } } },
         scales: {
           x: {
-            title: { display: true, text: 'Radio del Recipiente r [mm]', color: '#94a3b8' },
-            grid: { color: 'rgba(255, 255, 255, 0.08)' },
-            ticks: { color: '#94a3b8', maxTicksLimit: 8 }
+            title: { display: true, text: 'Radio del Recipiente r [mm]', color: '#475569' },
+            grid: { color: 'rgba(15, 23, 42, 0.08)' },
+            ticks: { color: '#475569', maxTicksLimit: 8 }
           },
           y: {
-            title: { display: true, text: 'Densidad de Corriente [kA/m]', color: '#94a3b8' },
-            grid: { color: 'rgba(255, 255, 255, 0.08)' },
-            ticks: { color: '#94a3b8' }
+            title: { display: true, text: 'Densidad de Corriente [kA/m]', color: '#475569' },
+            grid: { color: 'rgba(15, 23, 42, 0.08)' },
+            ticks: { color: '#475569' }
           }
         }
       }
@@ -109,17 +109,17 @@ export class ChartsManager {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { labels: { color: '#e2e8f0' } } },
+        plugins: { legend: { labels: { color: '#334155' } } },
         scales: {
           x: {
-            title: { display: true, text: 'Radio del Recipiente r [mm]', color: '#94a3b8' },
-            grid: { color: 'rgba(255, 255, 255, 0.08)' },
-            ticks: { color: '#94a3b8', maxTicksLimit: 8 }
+            title: { display: true, text: 'Radio del Recipiente r [mm]', color: '#475569' },
+            grid: { color: 'rgba(15, 23, 42, 0.08)' },
+            ticks: { color: '#475569', maxTicksLimit: 8 }
           },
           y: {
-            title: { display: true, text: 'Disipación Térmica [kW/m²]', color: '#94a3b8' },
-            grid: { color: 'rgba(255, 255, 255, 0.08)' },
-            ticks: { color: '#94a3b8' }
+            title: { display: true, text: 'Disipación Térmica [kW/m²]', color: '#475569' },
+            grid: { color: 'rgba(15, 23, 42, 0.08)' },
+            ticks: { color: '#475569' }
           }
         }
       }
@@ -129,7 +129,7 @@ export class ChartsManager {
   private initSkinDepthChart() {
     const ctx = (document.getElementById('chartSkinDepth') as HTMLCanvasElement).getContext('2d')!;
     const freqs = [10, 15, 20, 25, 30, 40, 50, 60, 80, 100];
-    const colors = ['#38bdf8', '#4ade80', '#fb923c', '#c084fc', '#f87171', '#fbbf24'];
+    const colors = ['#0284c7', '#16a34a', '#fb923c', '#9333ea', '#dc2626', '#d97706'];
 
     const datasets = Object.values(MATERIALS).map((mat, idx) => ({
       label: mat.name.replace('Acero Inoxidable ', 'Inox ').replace('Acero al Carbono', 'Carbono'),
@@ -149,18 +149,18 @@ export class ChartsManager {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { labels: { color: '#e2e8f0', boxWidth: 12 } } },
+        plugins: { legend: { labels: { color: '#334155', boxWidth: 12 } } },
         scales: {
           x: {
-            title: { display: true, text: 'Frecuencia de Operación f', color: '#94a3b8' },
-            grid: { color: 'rgba(255, 255, 255, 0.08)' },
-            ticks: { color: '#94a3b8' }
+            title: { display: true, text: 'Frecuencia de Operación f', color: '#475569' },
+            grid: { color: 'rgba(15, 23, 42, 0.08)' },
+            ticks: { color: '#475569' }
           },
           y: {
             type: 'logarithmic',
-            title: { display: true, text: 'Profundidad de Penetración δ [mm]', color: '#94a3b8' },
-            grid: { color: 'rgba(255, 255, 255, 0.08)' },
-            ticks: { color: '#94a3b8' }
+            title: { display: true, text: 'Profundidad de Penetración δ [mm]', color: '#475569' },
+            grid: { color: 'rgba(15, 23, 42, 0.08)' },
+            ticks: { color: '#475569' }
           }
         }
       }
@@ -176,7 +176,7 @@ export class ChartsManager {
         datasets: [{
           label: 'Resistencia Superficial Rs [mΩ/cuadrado]',
           data: [],
-          backgroundColor: ['#38bdf8', '#4ade80', '#fb923c', '#c084fc', '#f87171', '#94a3b8'],
+          backgroundColor: ['#0284c7', '#16a34a', '#fb923c', '#9333ea', '#dc2626', '#475569'],
           borderRadius: 4
         }]
       },
@@ -185,11 +185,11 @@ export class ChartsManager {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { display: false } },
+          x: { ticks: { color: '#475569', font: { size: 10 } }, grid: { display: false } },
           y: {
-            title: { display: true, text: 'Rs [mΩ/□]', color: '#94a3b8' },
-            grid: { color: 'rgba(255, 255, 255, 0.08)' },
-            ticks: { color: '#94a3b8' }
+            title: { display: true, text: 'Rs [mΩ/□]', color: '#475569' },
+            grid: { color: 'rgba(15, 23, 42, 0.08)' },
+            ticks: { color: '#475569' }
           }
         }
       }
@@ -203,7 +203,7 @@ export class ChartsManager {
       data: {
         labels: [],
         datasets: [
-          { label: 'Calor Corrientes Foucault [W]', data: [], backgroundColor: '#38bdf8', borderRadius: 2 },
+          { label: 'Calor Corrientes Foucault [W]', data: [], backgroundColor: '#0284c7', borderRadius: 2 },
           { label: 'Calor Histéresis Magnética [W]', data: [], backgroundColor: '#fb923c', borderRadius: 2 },
           { label: 'Pérdidas Bobina Primaria [W]', data: [], backgroundColor: '#64748b', borderRadius: 2 }
         ]
@@ -211,14 +211,14 @@ export class ChartsManager {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { labels: { color: '#e2e8f0', boxWidth: 12 } } },
+        plugins: { legend: { labels: { color: '#334155', boxWidth: 12 } } },
         scales: {
-          x: { stacked: true, ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { display: false } },
+          x: { stacked: true, ticks: { color: '#475569', font: { size: 10 } }, grid: { display: false } },
           y: {
             stacked: true,
-            title: { display: true, text: 'Potencia Disipada [W]', color: '#94a3b8' },
-            grid: { color: 'rgba(255, 255, 255, 0.08)' },
-            ticks: { color: '#94a3b8' }
+            title: { display: true, text: 'Potencia Disipada [W]', color: '#475569' },
+            grid: { color: 'rgba(15, 23, 42, 0.08)' },
+            ticks: { color: '#475569' }
           }
         }
       }

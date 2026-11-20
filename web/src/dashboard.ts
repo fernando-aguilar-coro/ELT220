@@ -24,19 +24,6 @@ const REFERENCE_OPERATING: OperatingParams = {
   pan_radius: 0.110
 };
 
-function captionFor(factor: number): string {
-  if (factor < 0.08) {
-    return 'Conjunto cerrado. La vitrocerámica queda entre la bobina y la base, y el anillo de calor ya está en el metal.';
-  }
-  if (factor < 0.4) {
-    return 'La base se levanta. El anillo naranja es calor en el fondo del recipiente, no en el vidrio.';
-  }
-  if (factor < 0.72) {
-    return 'El vidrio queda al descubierto: sostiene la olla y deja pasar el campo. No es una resistencia.';
-  }
-  return 'Abajo, la bobina de cobre genera el campo y las barras de ferrita lo concentran hacia la olla.';
-}
-
 function init() {
   const stage = document.getElementById('productStage');
   if (!stage) return;
@@ -50,19 +37,20 @@ function init() {
   scene.updateModel(result);
   window.dispatchEvent(new Event('resize'));
 
-  const slider = document.getElementById('inputExploded') as HTMLInputElement | null;
-  const percent = document.getElementById('valExploded');
-  const caption = document.getElementById('explodeCaption');
-  if (!slider) return;
-
-  const apply = () => {
-    const value = parseFloat(slider.value);
-    scene.setExplodedFactor(value);
-    if (percent) percent.textContent = `${Math.round(value * 100)}%`;
-    if (caption) caption.textContent = captionFor(value);
+  // Scroll-driven: el conjunto se abre a medida que se recorre la página
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? window.scrollY / max : 0;
+      scene.setExplodedFactor(Math.max(0, Math.min(1, (p - 0.12) / 0.5)));
+      ticking = false;
+    });
   };
-
-  slider.addEventListener('input', apply);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
 
 window.addEventListener('DOMContentLoaded', init);

@@ -49,12 +49,14 @@ export class ThreeSceneManager {
 
     // 1. Scene setup
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x060b17);
+    this.scene.background = null;
 
     // 2. Camera setup
+    // Cámara: ajusta position (x, y, z) y lookAt para encuadre fino.
+    // z mayor = más lejos; x/y mueven el ángulo. lookAt es el punto al que mira.
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    this.camera.position.set(0, 22, 34);
-    this.camera.lookAt(0, 2, 0);
+    this.camera.position.set(0, 26, 46);
+    this.camera.lookAt(0, 8, 0);
 
     // 3. Renderer setup
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -87,7 +89,7 @@ export class ThreeSceneManager {
     this.panHeatCanvas.height = 512;
     this.panHeatTexture = new THREE.CanvasTexture(this.panHeatCanvas);
     this.fluxMaterial = new THREE.LineDashedMaterial({
-      color: 0x7dd3fc,
+      color: 0x0369a1,
       transparent: true,
       opacity: 0.85,
       dashSize: 0.55,
@@ -281,7 +283,7 @@ export class ThreeSceneManager {
     const baseGeo = new THREE.CylinderGeometry(panRadius, panRadius, 0.4, 48);
 
     const isMag = res.material.isFerromagnetic;
-    const metalColor = isMag ? 0x94a3b8 : 0xd1d5db;
+    const metalColor = isMag ? 0xaab6c4 : 0xd9e1ea;
 
     const materials = [
       new THREE.MeshStandardMaterial({ color: metalColor, metalness: 0.85, roughness: 0.3 }), // Side
@@ -302,9 +304,9 @@ export class ThreeSceneManager {
     const wallHeight = 5.0;
     const wallGeo = new THREE.CylinderGeometry(panRadius * 1.08, panRadius, wallHeight, 48, 1, true);
     const wallMat = new THREE.MeshStandardMaterial({
-      color: isMag ? 0x334155 : 0x64748b,
-      metalness: 0.8,
-      roughness: 0.3,
+      color: isMag ? 0xdbe2ec : 0xe9eef5,
+      metalness: 0.85,
+      roughness: 0.28,
       side: THREE.DoubleSide
     });
     const wallMesh = new THREE.Mesh(wallGeo, wallMat);
@@ -313,7 +315,7 @@ export class ThreeSceneManager {
 
     // 4. Pan handle
     const handleGeo = new THREE.CylinderGeometry(0.4, 0.4, 9.0, 16);
-    const handleMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.8 });
+    const handleMat = new THREE.MeshStandardMaterial({ color: 0x8d99ab, metalness: 0.7, roughness: 0.35 });
     const handleMesh = new THREE.Mesh(handleGeo, handleMat);
     handleMesh.rotation.z = Math.PI / 2.3;
     handleMesh.position.set(panRadius + 4.0, wallHeight * 0.7, 0);
@@ -330,7 +332,7 @@ export class ThreeSceneManager {
     ctx.clearRect(0, 0, w, h);
 
     // Base metal background
-    ctx.fillStyle = '#475569';
+    ctx.fillStyle = '#9aa7b5';
     ctx.fillRect(0, 0, w, h);
 
     // Draw annular eddy current heating ring

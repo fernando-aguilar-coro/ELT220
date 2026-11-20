@@ -7,6 +7,11 @@
   <title>Cocina de inducción</title>
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2'><circle cx='12' cy='12' r='10'/><path d='M12 2a10 10 0 0 1 10 10'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet" />
 </head>
 
 <body>
@@ -22,13 +27,17 @@
         <span>Cocina de inducción</span>
       </a>
       <nav class="product-nav" aria-label="Secciones">
+        <a class="nav-link" href="#pasos">Cómo funciona</a>
         <a class="nav-link" href="./simulacion.html">Simulador</a>
       </nav>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="hero-copy">
+    <div class="stage-bg" aria-hidden="true">
+      <div id="productStage" class="product-stage"></div>
+    </div>
+    <main class="page">
+      <div class="page-col">
+        <section class="hero">
           <p class="eyebrow">Caso · acero 430</p>
           <h1>Sistema de calentamiento inductivo mediante campos magnéticos de
             alta frecuencia.</h1>
@@ -50,33 +59,15 @@
               <span>base de acero de 110 mm</span>
             </li>
           </ul>
-          <a class="cta" href="./simulacion.html">Simulador</a>
-        </div>
+          <a class="cta" href="#anatomia">Ver por dentro</a>
+        </section>
 
-        <div class="stage-card">
-          <div id="productStage" class="product-stage"></div>
-          <div class="stage-controls">
-            <label class="explode-label" for="inputExploded">
-              Ver por dentro
-              <input type="range" id="inputExploded" min="0" max="1" step="0.01" value="0" />
-              <span id="valExploded">0%</span>
-            </label>
-            <p id="explodeCaption" class="explode-caption">
-              Conjunto cerrado. La vitrocerámica queda entre la bobina y la base, y el anillo de calor ya está en el
-              metal.
-            </p>
-            <p class="stage-hint">Líneas azules: campo magnético. Anillo naranja: calor en el acero. Arrastra para
-              girar.</p>
+        <section class="section" id="anatomia" aria-labelledby="anatomy-title">
+          <div class="section-head">
+            <h2 id="anatomy-title">Cada capa tiene un trabajo</h2>
+            <p>El modelo se va abriendo a medida que bajas: estas son las piezas que encuentras dentro.</p>
           </div>
-        </div>
-      </section>
-
-      <section class="section" aria-labelledby="anatomy-title">
-        <div class="section-head">
-          <p>Cada capa del modelo tiene un trabajo. Separa el conjunto con «Ver por dentro» y compáralo con estas
-            piezas.</p>
-        </div>
-        <div class="anatomy-grid">
+          <div class="anatomy-grid">
           <article class="anatomy-card">
             <span class="swatch swatch-ferrite" aria-hidden="true"></span>
             <h3>Barras de ferrita</h3>
@@ -104,7 +95,7 @@
         </div>
       </section>
 
-      <section class="section" aria-labelledby="how-title">
+      <section class="section" id="pasos" aria-labelledby="how-title">
         <div class="section-head">
           <h2 id="how-title">Cómo cocina</h2>
           <p>Cuatro pasos, en el orden en que ocurren dentro del aparato.</p>
@@ -136,11 +127,12 @@
       <section class="close">
         <div>
           <h2>Cambia el material, la corriente y la frecuencia.</h2>
-          <p>En el laboratorio el mismo modelo responde a los controles, y se ven el campo, la bobina, el calor y el
+          <p>En el simulador el mismo modelo responde a los controles, y se ven el campo, la bobina, el calor y el
             circuito.</p>
         </div>
         <a class="cta" href="./simulacion.html">Simulador</a>
       </section>
+      </div>
     </main>
   </div>
 
