@@ -349,5 +349,19 @@ function bindExportEvent() {
   });
 }
 
+// Escala "mini-escritorio": por debajo de 1280px el layout completo de
+// escritorio se renderiza a 1280px de ancho y se reduce con transform: scale
+const DESIGN_WIDTH = 1280;
+
+function applyViewportScale() {
+  const scale = Math.min(1, window.innerWidth / DESIGN_WIDTH);
+  const root = document.documentElement;
+  root.classList.toggle('app-scaled', scale < 0.999);
+  root.style.setProperty('--app-scale', scale.toFixed(4));
+}
+
+window.addEventListener('resize', applyViewportScale);
+applyViewportScale();
+
 // Iniciar aplicación al cargar el DOM
 window.addEventListener('DOMContentLoaded', init);

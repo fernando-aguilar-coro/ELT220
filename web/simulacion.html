@@ -6,6 +6,17 @@
   <title>Simulación y Diseño Electromagnético: Cocina de Inducción</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2'><circle cx='12' cy='12' r='10'/><path d='M12 2a10 10 0 0 1 10 10'/></svg>" />
   <link rel="stylesheet" href="./src/style.css" />
+  <script>
+    // Mini-escritorio escalado: aplica la clase antes del primer pintado
+    (function () {
+      var s = Math.min(1, window.innerWidth / 1280);
+      if (s < 0.999) {
+        var el = document.documentElement;
+        el.classList.add('app-scaled');
+        el.style.setProperty('--app-scale', s.toFixed(4));
+      }
+    })();
+  </script>
   <!-- KaTeX para renderizado de fórmulas matemáticas -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>

@@ -290,8 +290,17 @@ export class FieldCanvasRenderer {
         const bMag = Math.sqrt(brTot * brTot + bzTot * bzTot);
 
         this.tooltip.classList.remove('hidden');
-        this.tooltip.style.left = `${e.clientX + 15}px`;
-        this.tooltip.style.top = `${e.clientY - 20}px`;
+        if (document.documentElement.classList.contains('app-scaled')) {
+          // Con transform: scale en #app, position:fixed queda relativo a #app;
+          // hay que convertir coordenadas visuales a unidades locales pre-escala
+          const scale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--app-scale')) || 1;
+          const appRect = document.getElementById('app')!.getBoundingClientRect();
+          this.tooltip.style.left = `${(e.clientX + 15 - appRect.left) / scale}px`;
+          this.tooltip.style.top = `${(e.clientY - 20 - appRect.top) / scale}px`;
+        } else {
+          this.tooltip.style.left = `${e.clientX + 15}px`;
+          this.tooltip.style.top = `${e.clientY - 20}px`;
+        }
         this.tooltip.innerHTML = `
           <div class="tooltip-title">Field Probe</div>
           <div>r: ${(r * 1e3).toFixed(1)} mm | z: ${(z * 1e3).toFixed(1)} mm</div>
