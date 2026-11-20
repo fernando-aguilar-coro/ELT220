@@ -42,6 +42,11 @@ export class ThreeSceneManager {
   private animFrameId: number | null = null;
   private _currentResult: SimulationResult | null = null; // reservado para interacción futura (hover/probe)
 
+  // Encuadre automático de cámara
+  private readonly camOffset = new THREE.Vector3(0, 18, 46); // position - lookAt
+  private readonly lookTarget = new THREE.Vector3(0, 8, 0);
+  private zoomFactor = 1.0;
+
   constructor(container: HTMLElement) {
     this.container = container;
     const width = container.clientWidth || 800;
@@ -52,11 +57,12 @@ export class ThreeSceneManager {
     this.scene.background = null;
 
     // 2. Camera setup
-    // Cámara: ajusta position (x, y, z) y lookAt para encuadre fino.
-    // z mayor = más lejos; x/y mueven el ángulo. lookAt es el punto al que mira.
+    // Cámara: ajusta camOffset (x, y, z relativo a lookTarget) y lookTarget
+    // para encuadre fino. La distancia final la calcula updateCameraFit().
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    this.camera.position.set(0, 26, 46);
-    this.camera.lookAt(0, 8, 0);
+    this.camera.position.copy(this.lookTarget).add(this.camOffset);
+    this.camera.lookAt(this.lookTarget);
+    this.updateCameraFit();
 
     // 3. Renderer setup
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -131,6 +137,30 @@ export class ThreeSceneManager {
   public setExplodedFactor(val: number) {
     this.explodedFactor = Math.max(0, Math.min(1, val));
     this.updateLayerPositions();
+    this.updateCameraFit();
+  }
+
+  /**
+   * Ajusta la distancia de cámara para que el modelo quepa en cualquier
+   * proporción de pantalla. En pantallas angostas/verticales se aleja;
+   * al explotar el conjunto se aleja un poco más (crece en altura).
+   * La dirección (ángulo) se mantiene; solo cambia la distancia.
+   */
+  private updateCameraFit() {
+    const w = this.container.clientWidth || 1;
+    const h = this.container.clientHeight || 1;
+    const aspect = w / h;
+
+    // aspect ~1.78 (16:9) → factor 1. Portrait o cuadrado → se aleja.
+    const aspectFit = Math.min(1.6, Math.max(1, 1.5 / aspect));
+    // El modelo explotado es ~20% más alto
+    const explodeFit = 1 + this.explodedFactor * 0.2;
+    // zoomFactor lo controla la rueda del mouse
+    const dist = this.camOffset.length() * aspectFit * explodeFit * this.zoomFactor;
+
+    const dir = this.camOffset.clone().normalize();
+    this.camera.position.copy(this.lookTarget).addScaledVector(dir, dist);
+    this.camera.lookAt(this.lookTarget);
   }
 
   private updateLayerPositions() {
@@ -429,8 +459,9 @@ export class ThreeSceneManager {
 
     dom.addEventListener('wheel', (e) => {
       e.preventDefault();
-      this.camera.position.z += e.deltaY * 0.03;
-      this.camera.position.z = Math.max(15, Math.min(65, this.camera.position.z));
+      this.zoomFactor *= 1 + e.deltaY * 0.001;
+      this.zoomFactor = Math.max(0.6, Math.min(2.2, this.zoomFactor));
+      this.updateCameraFit();
     });
   }
 
@@ -441,6 +472,7 @@ export class ThreeSceneManager {
       this.camera.aspect = width / height;
       this.camera.updateProjectionMatrix();
       this.renderer.setSize(width, height);
+      this.updateCameraFit();
     }
   }
 

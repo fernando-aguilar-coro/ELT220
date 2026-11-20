@@ -44,7 +44,8 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
   padding: 0.9rem 1.75rem;
   background: rgba(255, 255, 255, 0.78);
   border-bottom: 1px solid var(--border-color);
@@ -375,9 +376,40 @@ a {
   }
 }
 
-@media (max-width: 640px) {
+/* En pantallas medianas el modelo se reduce un poco para no estorbar
+   a las tarjetas de contenido */
+@media (max-width: 1099px) {
   .product-stage {
-    transform: none;
+    transform: scale(0.88);
+  }
+}
+
+/* En móviles el modelo baja y se achica: el texto manda */
+@media (max-width: 640px) {
+  .product-header {
+    padding: 0.7rem 1rem;
+  }
+
+  .brand {
+    font-size: 0.92rem;
+  }
+
+  .logo-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-link {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .page-col {
+    padding: 0 1rem;
+  }
+
+  .product-stage {
+    transform: translateY(14vh) scale(0.78);
   }
 
   .anatomy-grid,
