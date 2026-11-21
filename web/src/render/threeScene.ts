@@ -41,6 +41,8 @@ export class ThreeSceneManager {
   private accentLight: THREE.PointLight | null = null;
 
   private animFrameId: number | null = null;
+  private isVisible = true;
+  private visibilityObserver: IntersectionObserver | null = null;
   private _currentResult: SimulationResult | null = null; // reservado para interacción futura (hover/probe)
 
   // Encuadre automático de cámara
@@ -69,7 +71,9 @@ export class ThreeSceneManager {
     // 3. Renderer setup
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     this.renderer.setSize(width, height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // En punteros táctiles el pixel ratio alto castiga el GPU; se limita
+    const isCoarsePointer = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, isCoarsePointer ? 1.25 : 2));
     this.renderer.shadowMap.enabled = true;
     this.container.appendChild(this.renderer.domElement);
 
@@ -110,6 +114,14 @@ export class ThreeSceneManager {
     // 8. Window resize listener
     window.addEventListener('resize', this.onWindowResize.bind(this));
 
+    // 8b. Pausar el render cuando el canvas está fuera de pantalla
+    if (typeof IntersectionObserver !== 'undefined') {
+      this.visibilityObserver = new IntersectionObserver((entries) => {
+        this.isVisible = entries[0]?.isIntersecting ?? true;
+      });
+      this.visibilityObserver.observe(this.container);
+    }
+
     // 9. Start render loop
     this.animate();
   }
@@ -137,7 +149,9 @@ export class ThreeSceneManager {
   }
 
   public setExplodedFactor(val: number) {
-    this.explodedFactor = Math.max(0, Math.min(1, val));
+    val = Math.max(0, Math.min(1, val));
+    if (val === this.explodedFactor) return;
+    this.explodedFactor = val;
     this.updateLayerPositions();
     this.updateCameraFit();
   }
@@ -494,6 +508,9 @@ export class ThreeSceneManager {
   private animate() {
     this.animFrameId = requestAnimationFrame(this.animate.bind(this));
 
+    // No renderizar si el canvas está fuera de pantalla o la pestaña oculta
+    if (!this.isVisible || document.hidden) return;
+
     // Rotación lenta en idle (autoRotate de OrbitControls se pausa al interactuar)
     this.controls.autoRotate = !this.isDragging;
     this.controls.update();
@@ -514,6 +531,7 @@ export class ThreeSceneManager {
   public destroy() {
     if (this.animFrameId !== null) cancelAnimationFrame(this.animFrameId);
     window.removeEventListener('resize', this.onWindowResize);
+    this.visibilityObserver?.disconnect();
     this.controls?.dispose();
     this.renderer.dispose();
   }
