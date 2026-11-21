@@ -19,6 +19,19 @@
   padding: 0;
 }
 
+/* Evita scroll horizontal accidental en móviles (tablas, fórmulas, etc.) */
+html,
+body {
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+}
+
 body {
   font-family: var(--font-family);
   background:
@@ -422,9 +435,15 @@ a {
   color: var(--text-primary);
 }
 
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0.8rem 0;
+}
+
 .loss-table {
   width: 100%;
-  margin: 0.8rem 0;
+  min-width: 34rem;
   border-collapse: collapse;
   font-size: 0.82rem;
   text-align: left;
