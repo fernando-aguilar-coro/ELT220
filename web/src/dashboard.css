@@ -422,6 +422,39 @@ a {
   color: var(--text-primary);
 }
 
+.loss-table {
+  width: 100%;
+  margin: 0.8rem 0;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.loss-table th,
+.loss-table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.loss-table th {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.15);
+}
+
+.loss-table td {
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.loss-table td:first-child {
+  color: var(--text-primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .katex {
   font-size: 1.04em;
 }

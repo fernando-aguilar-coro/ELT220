@@ -10,6 +10,7 @@
  */
 
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SimulationResult } from '../types.ts';
 
 export class ThreeSceneManager {
@@ -17,6 +18,7 @@ export class ThreeSceneManager {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
+  private controls!: OrbitControls;
 
   // 3D Model Groups
   private rootGroup: THREE.Group;
@@ -33,7 +35,6 @@ export class ThreeSceneManager {
 
   // Interactivity
   private isDragging = false;
-  private previousMousePosition = { x: 0, y: 0 };
   private explodedFactor = 0.0; // 0.0 = normal, 1.0 = fully exploded
   private fieldEnergy = 1;
   private fluxMaterial: THREE.LineDashedMaterial;
@@ -46,6 +47,7 @@ export class ThreeSceneManager {
   private readonly camOffset = new THREE.Vector3(0, 18, 46); // position - lookAt
   private readonly lookTarget = new THREE.Vector3(0, 8, 0);
   private zoomFactor = 1.0;
+  private lastFitDist = 0;
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -102,8 +104,8 @@ export class ThreeSceneManager {
       gapSize: 0.32
     });
 
-    // 7. Mouse Orbit Controls
-    this.setupMouseControls();
+    // 7. Orbit Controls (mouse + touch: 1 dedo/puntero rota, 2 dedos zoom/pan)
+    this.setupOrbitControls();
 
     // 8. Window resize listener
     window.addEventListener('resize', this.onWindowResize.bind(this));
@@ -155,12 +157,29 @@ export class ThreeSceneManager {
     const aspectFit = Math.min(1.6, Math.max(1, 1.5 / aspect));
     // El modelo explotado es ~20% más alto
     const explodeFit = 1 + this.explodedFactor * 0.2;
-    // zoomFactor lo controla la rueda del mouse
-    const dist = this.camOffset.length() * aspectFit * explodeFit * this.zoomFactor;
+
+    // Distancia base de encuadre (sin zoom del usuario)
+    const baseDist = this.camOffset.length() * aspectFit * explodeFit;
+
+    // Conserva el zoom del usuario entre cambios de encuadre:
+    // zoomFactor = distancia actual / distancia base anterior
+    if (this.lastFitDist > 0) {
+      const currentDist = this.camera.position.distanceTo(this.lookTarget);
+      this.zoomFactor = currentDist / this.lastFitDist;
+      this.zoomFactor = Math.max(0.55, Math.min(2.4, this.zoomFactor));
+    }
+    this.lastFitDist = baseDist;
+
+    const dist = baseDist * this.zoomFactor;
+    if (this.controls) {
+      this.controls.minDistance = baseDist * 0.45;
+      this.controls.maxDistance = baseDist * 3.0;
+    }
 
     const dir = this.camOffset.clone().normalize();
     this.camera.position.copy(this.lookTarget).addScaledVector(dir, dist);
     this.camera.lookAt(this.lookTarget);
+    this.controls?.update();
   }
 
   private updateLayerPositions() {
@@ -430,39 +449,35 @@ export class ThreeSceneManager {
     }
   }
 
-  private setupMouseControls() {
+  private setupOrbitControls() {
     const dom = this.renderer.domElement;
+    // Evita que el navegador capture gestos táctiles (scroll/zoom de página)
+    dom.style.touchAction = 'none';
 
-    dom.addEventListener('mousedown', (e) => {
+    this.controls = new OrbitControls(this.camera, dom);
+    this.controls.target.copy(this.lookTarget);
+    this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.08;
+    this.controls.enablePan = false;
+    this.controls.rotateSpeed = 0.7;
+    this.controls.zoomSpeed = 0.9;
+    // 2 dedos: pellizco para zoom (sin paneo)
+    this.controls.touches = {
+      ONE: THREE.TOUCH.ROTATE,
+      TWO: THREE.TOUCH.DOLLY_ROTATE
+    };
+    // Rotación lenta en idle; se pausa mientras el usuario arrastra
+    this.controls.autoRotate = true;
+    this.controls.autoRotateSpeed = -1.2;
+
+    this.controls.addEventListener('start', () => {
       this.isDragging = true;
-      this.previousMousePosition = { x: e.clientX, y: e.clientY };
     });
-
-    dom.addEventListener('mousemove', (e) => {
-      if (!this.isDragging) return;
-
-      const deltaX = e.clientX - this.previousMousePosition.x;
-      const deltaY = e.clientY - this.previousMousePosition.y;
-
-      this.rootGroup.rotation.y += deltaX * 0.008;
-      this.rootGroup.rotation.x += deltaY * 0.005;
-
-      // Clamp vertical tilt
-      this.rootGroup.rotation.x = Math.max(-0.4, Math.min(1.2, this.rootGroup.rotation.x));
-
-      this.previousMousePosition = { x: e.clientX, y: e.clientY };
-    });
-
-    window.addEventListener('mouseup', () => {
+    this.controls.addEventListener('end', () => {
       this.isDragging = false;
     });
 
-    dom.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      this.zoomFactor *= 1 + e.deltaY * 0.001;
-      this.zoomFactor = Math.max(0.6, Math.min(2.2, this.zoomFactor));
-      this.updateCameraFit();
-    });
+    this.updateCameraFit();
   }
 
   private onWindowResize() {
@@ -479,10 +494,9 @@ export class ThreeSceneManager {
   private animate() {
     this.animFrameId = requestAnimationFrame(this.animate.bind(this));
 
-    // Gentle slow idle rotation when not dragging
-    if (!this.isDragging) {
-      this.rootGroup.rotation.y += 0.002;
-    }
+    // Rotación lenta en idle (autoRotate de OrbitControls se pausa al interactuar)
+    this.controls.autoRotate = !this.isDragging;
+    this.controls.update();
 
     const time = performance.now() * 0.002;
     const energy = this.fieldEnergy;
@@ -500,6 +514,7 @@ export class ThreeSceneManager {
   public destroy() {
     if (this.animFrameId !== null) cancelAnimationFrame(this.animFrameId);
     window.removeEventListener('resize', this.onWindowResize);
+    this.controls?.dispose();
     this.renderer.dispose();
   }
 }

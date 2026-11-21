@@ -62,8 +62,8 @@
           <article class="anatomy-card">
             <span class="swatch swatch-coil" aria-hidden="true"></span>
             <h3>Bobina de cobre</h3>
-            <p>Espiral plana por la que circula la corriente alterna. Es la pieza que genera el campo. Ella misma casi
-              no se calienta.</p>
+            <p>Espiral plana por la que circula la corriente alterna. Es la pieza que genera el campo.
+              Su cobre disipa algo de calor, pero mucho menos que la olla.</p>
           </article>
           <article class="anatomy-card">
             <span class="swatch swatch-glass" aria-hidden="true"></span>
@@ -121,10 +121,13 @@
           <div class="exercise-step">
             <h3><span class="step-num">1</span>Planteamiento</h3>
             <p>Una bobina plana de <em>N</em> espiras transporta una corriente alterna de alta frecuencia:</p>
-            $$I(t) = I_m \sin(2\pi f t), \qquad f \approx 20\text{–}100\ \text{kHz}$$
+            $$I(t) = I_m \sin(2\pi f t), \qquad I_{rms} = \frac{I_m}{\sqrt{2}}, \qquad \omega = 2\pi f, \qquad f \approx 20\text{–}100\ \text{kHz}$$
+            <p>Cada espira es un lazo de radio medio <em>R</em> por el que circulan <em>N·I</em> amperios-vuelta;
+en notación fasorial la corriente es <em>I</em> = I<sub>rms</sub>∠0° y todos los campos quedan en fase o
+desfasados 90° respecto a ella.</p>
             <p>Sobre ella, a unos milímetros, descansa la olla: un disco de acero de conductividad
-              <em>σ</em>, permeabilidad <em>μ = μ₀μ<sub>r</sub></em> y espesor <em>d</em>. La pregunta del es cuánta potencia electromagnética llega al metal y cuánta se pierde por el
-              camino.</p>
+              <em>σ</em>, permeabilidad <em>μ = μ₀μ<sub>r</sub></em> y espesor <em>d</em>. La pregunta es
+              cuánta potencia electromagnética llega al metal y cuánta se pierde por el camino.</p>
           </div>
 
           <div class="exercise-step">
@@ -135,46 +138,130 @@
               la ley de Faraday, que ese campo variable induce el campo eléctrico <strong>E</strong> dentro
               del metal; la tercera, la ley de Ohm local, que ese campo empuja a los electrones y genera la
               corriente <strong>J</strong> que luego se disipa como calor.</p>
-            <p>Si se toma el rotacional de la ley de Faraday y se sustituye
-              <strong>B = μH</strong> y <strong>∇×H = σE</strong>, las ecuaciones se reducen a una sola, la
+            <p>Al tomar el rotacional de la ley de Faraday se encadenan las tres ecuaciones:</p>
+            $$\nabla\times(\nabla\times\mathbf{E}) = -\frac{\partial}{\partial t}(\nabla\times\mathbf{B}) = -\mu\,\frac{\partial}{\partial t}(\nabla\times\mathbf{H}) = -\mu\sigma\,\frac{\partial\mathbf{E}}{\partial t}$$
+            <p>Dentro del conductor no hay carga libre acumulada, así que ∇·<strong>E</strong> = 0 y la
+              identidad ∇×∇×<strong>E</strong> = ∇(∇·<strong>E</strong>) − ∇²<strong>E</strong> se reduce a
+              −∇²<strong>E</strong>. Las ecuaciones se condensan en una sola, la
               <strong>ecuación de difusión</strong>:</p>
             $$\nabla^2 \mathbf{E} = \mu\sigma\,\frac{\partial \mathbf{E}}{\partial t}$$
-            <p>Para campos armónicos del tipo <em>e</em><sup>jωt</sup>, la solución dentro de la olla decae
-              exponencialmente desde la superficie con la <strong>profundidad de penetración</strong>:</p>
+            <p>Para campos armónicos <strong>E</strong>(<strong>r</strong>)·<em>e</em><sup>jωt</sup> queda
+              ∇²<strong>E</strong> = jωμσ·<strong>E</strong>: una ecuación de Helmholtz con número de onda
+              complejo. Su solución en la dirección <em>x</em> perpendicular a la superficie es del tipo
+              <em>E</em>(<em>x</em>) = <em>E</em>₀·<em>e</em><sup>−x/δ</sup>·<em>e</em><sup>−jx/δ</sup>, es decir, una
+              onda que se apaga y además va desfasada. La constante de apagado es la
+              <strong>profundidad de penetración</strong> (o <em>skin depth</em>):</p>
             $$\delta = \sqrt{\frac{2}{\omega\mu\sigma}} = \sqrt{\frac{1}{\pi f \mu \sigma}}$$
-            <p>Con acero (μ<sub>r</sub> ≈ 100) a 25 kHz resulta δ ≈ 0,14 mm: toda la corriente se concentra
-              en una capa finísima, lo que equivale a una resistencia efectiva altísima. Por eso el acero
-              responde tan bien y, en cambio, el aluminio —con μ<sub>r</sub> ≈ 1— apenas se calienta.</p>
+            <p>La densidad de corriente <strong>J</strong> = σ<strong>E</strong> y la densidad de potencia
+              disipable p = ½σ|<strong>E</strong>|² decaen con la misma exponencial, así que todo el calor se
+              genera en una capa de espesor ~δ. Con acero (μ<sub>r</sub> ≈ 100) a 25 kHz resulta δ ≈ 0,14 mm:
+              la corriente se concentra en una capa finísima, lo que equivale a una resistencia efectiva
+              altísima. Por eso el acero responde tan bien y, en cambio, el aluminio —con μ<sub>r</sub> ≈ 1—
+              apenas se calienta.</p>
           </div>
 
           <div class="exercise-step">
-            <h3><span class="step-num">3</span>La olla como secundario de transformador</h3>
+            <h3><span class="step-num">3</span>El campo que produce la bobina</h3>
+            <p>Cada espira es un lazo de corriente; por Biot–Savart, el campo en el eje de un lazo de radio
+              <em>R</em> a una distancia <em>z</em> de su plano vale:</p>
+            $$B_z(z) = \frac{\mu_0 N I R^2}{2\,(R^2 + z^2)^{3/2}}, \qquad H_z(z) = \frac{B_z(z)}{\mu_0}$$
+            <p>En el plano de la bobina (<em>z</em> = 0) el campo es máximo, B<sub>z</sub>(0) = μ₀NI/(2R), y al
+              alejarse cae como 1/<em>z</em>³: a distancia comparable al radio ya se ha desplomado. Como la
+              olla está a <em>z</em> ≈ 7 mm de una bobina de radio ~60 mm, el campo en su fondo es una fracción
+              del máximo —el acoplamiento es incompleto y esa es la principal pérdida de diseño.</p>
+            <p>Tres consecuencias prácticas: el campo crece con el número de espiras <em>N</em> y con la
+              corriente <em>I</em>; decrece rápido al alejarse de la bobina —de ahí la importancia de la
+              separación bobina–olla—; y las <strong>barras de ferrita</strong> actúan como guías de flujo que
+              recogen las líneas que se escapan hacia abajo y las devuelven al fondo de la olla, concentrando
+              el acoplamiento donde interesa.</p>
+          </div>
+
+          <div class="exercise-step">
+            <h3><span class="step-num">4</span>La olla como secundario de transformador</h3>
             <p>El acoplamiento magnético entre bobina y olla funciona como un transformador: la base metálica
               es un <strong>secundario de una sola espira en cortocircuito</strong>, con resistencia R₂ e
-              inductancia L₂, acoplado al primario por la inductancia mutua M. La corriente inducida en la
-              olla crea un flujo que se opone al de la bobina, y desde la bobina eso se ve como una
-              <strong>impedancia reflejada</strong>:</p>
+              inductancia L₂, acoplado al primario por la inductancia mutua M (o por el coeficiente de
+              acoplamiento k = M/√(L₁L₂), que aquí vale ~0,6–0,8 gracias a las ferritas). La fem inducida en la
+              olla es ε₂ = jωM·I₁ y, al estar en cortocircuito, su corriente es:</p>
+            $$I_2 = \frac{j\omega M\, I_1}{R_2 + j\omega L_2}$$
+            <p>Esa corriente crea un flujo que se opone al de la bobina (ley de Lenz) y, desde la bobina, se
+              ve como una <strong>impedancia reflejada</strong> que se suma a la propia:</p>
             $$Z_{\text{ref}} = \frac{\omega^2 M^2}{R_2 + j\omega L_2} = \frac{\omega^2 M^2 R_2}{R_2^2 + \omega^2 L_2^2} \;-\; j\,\frac{\omega^2 M^2 L_2}{R_2^2 + \omega^2 L_2^2}$$
-            <p>La parte real es la que disipa potencia en la olla; la parte imaginaria desintoniza la bobina.
-              Así quedan la resistencia y la inductancia equivalentes vistas por la fuente:</p>
+            <p>La parte real de Z<sub>ref</sub> es la que disipa potencia en la olla (P₂ = R₂·|I₂|² con
+              fasores de pico, o I<sub>rms</sub>²·R₂); la parte imaginaria desintoniza la bobina. Así quedan
+              la resistencia y la inductancia equivalentes vistas por la fuente:</p>
             $$R_{eq} = \frac{\omega^2 M^2 R_2}{R_2^2 + \omega^2 L_2^2}, \qquad L_{eq} = L_1 - \frac{\omega^2 M^2 L_2}{R_2^2 + \omega^2 L_2^2}$$
             $$P_{\text{olla}} = I_{rms}^2 \, R_{eq}$$
+            <p>Nótese que R<sub>eq</sub> ∝ M²: duplicar el acoplamiento cuadruplica la potencia transferida, y
+              por eso las ferritas y la proximidad bobina–olla son críticas.</p>
             <p>Hay una forma equivalente más física: con la <strong>resistencia superficial</strong>
-              R<sub>s</sub> = 1/(σδ) —la resistencia del metal concentrada en la capa de espesor δ— la potencia
-              absorbida es la integral del campo tangencial sobre la superficie del fondo:</p>
+              R<sub>s</sub> = 1/(σδ) —la resistencia del metal concentrada en la capa de espesor δ, obtenida
+              integrando σ·E a través del espesor— la potencia absorbida es la integral del campo tangencial
+              sobre la superficie del fondo:</p>
             $$P = \tfrac{1}{2} R_s \oint |H_t|^2 \, dS$$
+            <p>Ambas expresiones son la misma física: la primera mira el problema desde el circuito
+              (transformador), la segunda desde el campo (densidad de pérdidas en la superficie).</p>
           </div>
 
           <div class="exercise-step">
-            <h3><span class="step-num">4</span>Resonancia y eficiencia</h3>
-            <p>La bobina forma un circuito serie con un condensador de compensación. Su frecuencia de
-              resonancia es:</p>
+            <h3><span class="step-num">5</span>Dónde se va la energía</h3>
+            <p>La potencia que disipa la olla no es toda la que consume la placa: primero el inversor debe
+              conmutar y el campo debe acoplarse. La bobina forma un circuito serie con un condensador de
+              compensación, cuya frecuencia de resonancia es:</p>
             $$f_0 = \frac{1}{2\pi\sqrt{L_{eq}\,C}}$$
             <p>El inversor trabaja un poco por encima de f₀: así la corriente conmuta cuando la tensión del
               interruptor ya es casi cero (<strong>ZVS</strong>, conmutación con tensión nula) y las pérdidas de
-              conmutación quedan minimizadas. Lo que llega a la olla frente a lo que consume la entrada da la
-              eficiencia:</p>
-            $$\eta = \frac{P_{\text{olla}}}{P_{\text{entrada}}} \approx 85\text{–}90\%$$
+              conmutación quedan minimizadas. El balance completo de energía es:</p>
+            $$P_{\text{entrada}} = P_{\text{olla}} + P_{\text{cobre}} + P_{\text{conmutación}} + P_{\text{ferritas}} + P_{\text{auxiliar}}$$
+            <p>donde la histéresis del acero sigue aproximadamente la ley de Steinmetz,
+              P<sub>hist</sub> ≈ k<sub>h</sub>·f·B<sub>max</sub><sup>β</sup>, y se suma al calor útil de la olla.
+              La tabla resume quién disipa qué:</p>
+            <table class="loss-table">
+              <thead>
+                <tr>
+                  <th>Origen</th>
+                  <th>Mecanismo</th>
+                  <th>¿Calor útil?</th>
+                  <th>Cómo se reduce</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Base de la olla</td>
+                  <td>Corrientes parásitas (Joule) e histéresis del acero</td>
+                  <td>Sí — es el objetivo</td>
+                  <td>Acero ferromagnético, δ pequeña</td>
+                </tr>
+                <tr>
+                  <td>Bobina de cobre</td>
+                  <td>I²R con efecto piel y proximidad</td>
+                  <td>No</td>
+                  <td>Hilo Litz, sección reducida</td>
+                </tr>
+                <tr>
+                  <td>IGBT / conmutación</td>
+                  <td>Pérdidas de conmutación y conducción</td>
+                  <td>No</td>
+                  <td>Operar sobre f₀ con ZVS</td>
+                </tr>
+                <tr>
+                  <td>Ferritas</td>
+                  <td>Corriente de Foucault en las barras</td>
+                  <td>No</td>
+                  <td>Geometría y material</td>
+                </tr>
+                <tr>
+                  <td>Vidrio y electrónica</td>
+                  <td>Conducción residual, drivers, control</td>
+                  <td>No</td>
+                  <td>Diseño térmico y componentes</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>Lo que llega a la olla frente a lo que consume la entrada da la eficiencia, que puede escribirse
+              como el cociente entre la resistencia que calienta la olla y la resistencia total vista por la
+              fuente:</p>
+            $$\eta = \frac{P_{\text{olla}}}{P_{\text{entrada}}} = \frac{R_{eq}}{R_{eq} + R_{\text{pérdidas}}} \approx 85\text{–}90\%$$
           </div>
         </article>
       </section>
