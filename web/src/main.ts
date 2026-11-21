@@ -59,7 +59,7 @@ function init() {
   bindControlEvents();
   bindTabEvents();
   bindPresetEvents();
-  bindExportEvent();
+
   bindExplodedViewEvent();
 
   // 5. Primera pasada de simulación
@@ -338,16 +338,6 @@ function bindExplodedViewEvent() {
   }
 }
 
-function bindExportEvent() {
-  document.getElementById('btnExportJSON')?.addEventListener('click', () => {
-    const result = runInductionSimulation(state.coil, state.operating, state.material);
-    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(result, null, 2));
-    const dlAnchor = document.createElement('a');
-    dlAnchor.setAttribute('href', dataStr);
-    dlAnchor.setAttribute('download', `simulacion_induccion_${state.material.id}.json`);
-    dlAnchor.click();
-  });
-}
 
 // Escala "mini-escritorio": por debajo de 1280px el layout completo de
 // escritorio se renderiza a 1280px de ancho y se reduce con transform: scale

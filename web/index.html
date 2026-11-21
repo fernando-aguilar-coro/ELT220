@@ -12,6 +12,10 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '\\(', right: '\\)', display: false }, { left: '\\[', right: '\\]', display: true }] });"></script>
 </head>
 
 <body>
@@ -28,6 +32,7 @@
       </a>
       <nav class="product-nav" aria-label="Secciones">
         <a class="nav-link" href="#pasos">Cómo funciona</a>
+        <a class="nav-link" href="#modelo">Modelo</a>
         <a class="nav-link" href="./simulacion.html">Simulador</a>
       </nav>
     </header>
@@ -38,34 +43,14 @@
     <main class="page">
       <div class="page-col">
         <section class="hero">
-          <p class="eyebrow">Caso · acero 430</p>
-          <h1>Sistema de calentamiento inductivo mediante campos magnéticos de
-            alta frecuencia.</h1>
-          <p class="lede">
-            Sartén de acero inoxidable ferrítico sobre una bobina plana. Las líneas
-            azules son el campo magnético en movimiento. El anillo naranja es el calor que ese campo induce en el metal.
-          </p>
-          <ul class="spec-row">
-            <li>
-              <strong>25 kHz · 16,5 A</strong>
-              <span>corriente en la bobina</span>
-            </li>
-            <li>
-              <strong>20 vueltas</strong>
-              <span>de 25 mm a 100 mm</span>
-            </li>
-            <li>
-              <strong>Vidrio de 7 mm</strong>
-              <span>base de acero de 110 mm</span>
-            </li>
-          </ul>
-          <a class="cta" href="#anatomia">Ver por dentro</a>
+          <p class="eyebrow">Electromagnetismo - aplicacion practica cocina a induccion</p>
+          <h1>Cocina a induccion electromagnetica</h1>
+          <a class="cta" href="./simulacion.html">Simulador</a>
         </section>
 
         <section class="section" id="anatomia" aria-labelledby="anatomy-title">
           <div class="section-head">
-            <h2 id="anatomy-title">Cada capa tiene un trabajo</h2>
-            <p>El modelo se va abriendo a medida que bajas: estas son las piezas que encuentras dentro.</p>
+            <h2 id="anatomy-title">Partes principales</h2>
           </div>
           <div class="anatomy-grid">
           <article class="anatomy-card">
@@ -97,8 +82,7 @@
 
       <section class="section" id="pasos" aria-labelledby="how-title">
         <div class="section-head">
-          <h2 id="how-title">Cómo cocina</h2>
-          <p>Cuatro pasos, en el orden en que ocurren dentro del aparato.</p>
+          <h2 id="how-title">Funcionamiento</h2>
         </div>
         <ol class="steps">
           <li>
@@ -124,6 +108,76 @@
         </ol>
       </section>
 
+      <section class="section" id="modelo" aria-labelledby="model-title">
+        <article class="card physics-exercise">
+          <header class="exercise-head">
+            <p class="eyebrow">Modelo · inducción electromagnética</p>
+            <h2 id="model-title">Modelo físico de la inducción</h2>
+            <p class="exercise-intro">Una bobina plana con corriente alterna de alta frecuencia induce
+              corrientes en la base ferromagnética de la olla, y esa energía se convierte en calor justo
+              donde se necesita. Este es el problema, resuelto paso a paso.</p>
+          </header>
+
+          <div class="exercise-step">
+            <h3><span class="step-num">1</span>Planteamiento</h3>
+            <p>Una bobina plana de <em>N</em> espiras transporta una corriente alterna de alta frecuencia:</p>
+            $$I(t) = I_m \sin(2\pi f t), \qquad f \approx 20\text{–}100\ \text{kHz}$$
+            <p>Sobre ella, a unos milímetros, descansa la olla: un disco de acero de conductividad
+              <em>σ</em>, permeabilidad <em>μ = μ₀μ<sub>r</sub></em> y espesor <em>d</em>. La pregunta del es cuánta potencia electromagnética llega al metal y cuánta se pierde por el
+              camino.</p>
+          </div>
+
+          <div class="exercise-step">
+            <h3><span class="step-num">2</span>De las ecuaciones de Maxwell a la difusión</h3>
+            <p>El punto de partida son las tres leyes que gobiernan el fenómeno:</p>
+            $$\nabla\times\mathbf{H}=\mathbf{J}, \qquad \nabla\times\mathbf{E}=-\frac{\partial\mathbf{B}}{\partial t}, \qquad \mathbf{J}=\sigma\mathbf{E}$$
+            <p>La primera dice que la corriente de la bobina produce el campo <strong>H</strong>; la segunda,
+              la ley de Faraday, que ese campo variable induce el campo eléctrico <strong>E</strong> dentro
+              del metal; la tercera, la ley de Ohm local, que ese campo empuja a los electrones y genera la
+              corriente <strong>J</strong> que luego se disipa como calor.</p>
+            <p>Si se toma el rotacional de la ley de Faraday y se sustituye
+              <strong>B = μH</strong> y <strong>∇×H = σE</strong>, las ecuaciones se reducen a una sola, la
+              <strong>ecuación de difusión</strong>:</p>
+            $$\nabla^2 \mathbf{E} = \mu\sigma\,\frac{\partial \mathbf{E}}{\partial t}$$
+            <p>Para campos armónicos del tipo <em>e</em><sup>jωt</sup>, la solución dentro de la olla decae
+              exponencialmente desde la superficie con la <strong>profundidad de penetración</strong>:</p>
+            $$\delta = \sqrt{\frac{2}{\omega\mu\sigma}} = \sqrt{\frac{1}{\pi f \mu \sigma}}$$
+            <p>Con acero (μ<sub>r</sub> ≈ 100) a 25 kHz resulta δ ≈ 0,14 mm: toda la corriente se concentra
+              en una capa finísima, lo que equivale a una resistencia efectiva altísima. Por eso el acero
+              responde tan bien y, en cambio, el aluminio —con μ<sub>r</sub> ≈ 1— apenas se calienta.</p>
+          </div>
+
+          <div class="exercise-step">
+            <h3><span class="step-num">3</span>La olla como secundario de transformador</h3>
+            <p>El acoplamiento magnético entre bobina y olla funciona como un transformador: la base metálica
+              es un <strong>secundario de una sola espira en cortocircuito</strong>, con resistencia R₂ e
+              inductancia L₂, acoplado al primario por la inductancia mutua M. La corriente inducida en la
+              olla crea un flujo que se opone al de la bobina, y desde la bobina eso se ve como una
+              <strong>impedancia reflejada</strong>:</p>
+            $$Z_{\text{ref}} = \frac{\omega^2 M^2}{R_2 + j\omega L_2} = \frac{\omega^2 M^2 R_2}{R_2^2 + \omega^2 L_2^2} \;-\; j\,\frac{\omega^2 M^2 L_2}{R_2^2 + \omega^2 L_2^2}$$
+            <p>La parte real es la que disipa potencia en la olla; la parte imaginaria desintoniza la bobina.
+              Así quedan la resistencia y la inductancia equivalentes vistas por la fuente:</p>
+            $$R_{eq} = \frac{\omega^2 M^2 R_2}{R_2^2 + \omega^2 L_2^2}, \qquad L_{eq} = L_1 - \frac{\omega^2 M^2 L_2}{R_2^2 + \omega^2 L_2^2}$$
+            $$P_{\text{olla}} = I_{rms}^2 \, R_{eq}$$
+            <p>Hay una forma equivalente más física: con la <strong>resistencia superficial</strong>
+              R<sub>s</sub> = 1/(σδ) —la resistencia del metal concentrada en la capa de espesor δ— la potencia
+              absorbida es la integral del campo tangencial sobre la superficie del fondo:</p>
+            $$P = \tfrac{1}{2} R_s \oint |H_t|^2 \, dS$$
+          </div>
+
+          <div class="exercise-step">
+            <h3><span class="step-num">4</span>Resonancia y eficiencia</h3>
+            <p>La bobina forma un circuito serie con un condensador de compensación. Su frecuencia de
+              resonancia es:</p>
+            $$f_0 = \frac{1}{2\pi\sqrt{L_{eq}\,C}}$$
+            <p>El inversor trabaja un poco por encima de f₀: así la corriente conmuta cuando la tensión del
+              interruptor ya es casi cero (<strong>ZVS</strong>, conmutación con tensión nula) y las pérdidas de
+              conmutación quedan minimizadas. Lo que llega a la olla frente a lo que consume la entrada da la
+              eficiencia:</p>
+            $$\eta = \frac{P_{\text{olla}}}{P_{\text{entrada}}} \approx 85\text{–}90\%$$
+          </div>
+        </article>
+      </section>
       <section class="close">
         <div>
           <h2>Cambia el material, la corriente y la frecuencia.</h2>
@@ -132,6 +186,17 @@
         </div>
         <a class="cta" href="./simulacion.html">Simulador</a>
       </section>
+
+      <section class="section viewer-section" id="visor" aria-labelledby="viewer-title">
+        <div class="section-head">
+          <h2 id="viewer-title">Explora el modelo</h2>
+          <p>Arrastra para girar la pieza y usa la rueda del ratón para acercar o alejar.</p>
+        </div>
+        <div class="viewer-frame card">
+          <div id="modelViewer" class="model-viewer"></div>
+        </div>
+      </section>
+
       </div>
     </main>
   </div>

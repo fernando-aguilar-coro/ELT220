@@ -37,6 +37,13 @@ function init() {
   scene.updateModel(result);
   window.dispatchEvent(new Event('resize'));
 
+  // Visor dedicado al final: mismo modelo, cámara manipulable
+  const viewerStage = document.getElementById('modelViewer');
+  if (viewerStage) {
+    const viewerScene = new ThreeSceneManager(viewerStage);
+    viewerScene.updateModel(result);
+  }
+
   // Scroll-driven: el conjunto se abre a medida que se recorre la página
   let ticking = false;
   const onScroll = () => {
