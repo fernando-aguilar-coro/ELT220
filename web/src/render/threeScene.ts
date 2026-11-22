@@ -58,7 +58,8 @@ export class ThreeSceneManager {
 
     // 1. Scene setup
     this.scene = new THREE.Scene();
-    this.scene.background = null;
+    // Fondo blanco suave (menos puro que #ffffff)
+    this.scene.background = new THREE.Color(0x999999);
 
     // 2. Camera setup
     // Cámara: ajusta camOffset (x, y, z relativo a lookTarget) y lookTarget
@@ -142,6 +143,54 @@ export class ThreeSceneManager {
     pointLight.position.set(0, 3, 0);
     this.accentLight = pointLight;
     this.scene.add(pointLight);
+
+    // Suelo sutil: una línea/grid horizontal para dar profundidad
+    this.addGroundPlane();
+  }
+
+  private addGroundPlane() {
+    // Plano de suelo muy sutil - solo una línea horizontal fina
+    const groundGeo = new THREE.RingGeometry(0.1, 18, 64, 1, 0, Math.PI * 2);
+    const groundMat = new THREE.MeshBasicMaterial({
+      color: 0xe8eaed,  // Un tono más suave que combine con #f8f9fa
+      transparent: true,
+      opacity: 0.3,
+      side: THREE.DoubleSide,
+      depthWrite: false
+    });
+    const groundMesh = new THREE.Mesh(groundGeo, groundMat);
+    groundMesh.rotation.x = -Math.PI / 2;
+    groundMesh.position.y = -2.2; // Justo debajo de las barras de ferrita
+    groundMesh.renderOrder = -1; // Renderizar primero
+    this.scene.add(groundMesh);
+
+    // Línea central horizontal (eje X) para referencia - más sutil
+    const lineGeo = new THREE.BufferGeometry();
+    const lineVertices = new Float32Array([
+      -18, -2.2, 0,
+      18, -2.2, 0
+    ]);
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(lineVertices, 3));
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0xd0d5dd,
+      transparent: true,
+      opacity: 0.4,
+      depthWrite: false
+    });
+    const centerLine = new THREE.Line(lineGeo, lineMat);
+    centerLine.renderOrder = -1;
+    this.scene.add(centerLine);
+
+    // Línea perpendicular (eje Z) para referencia - más sutil
+    const lineGeo2 = new THREE.BufferGeometry();
+    const lineVertices2 = new Float32Array([
+      0, -2.2, -18,
+      0, -2.2, 18
+    ]);
+    lineGeo2.setAttribute('position', new THREE.BufferAttribute(lineVertices2, 3));
+    const centerLine2 = new THREE.Line(lineGeo2, lineMat);
+    centerLine2.renderOrder = -1;
+    this.scene.add(centerLine2);
   }
 
   public setFieldEnergy(value: number) {

@@ -1,10 +1,10 @@
 :root {
   --bg-primary: #f2f5f8;
   --bg-secondary: #ffffff;
-  --bg-card: rgba(255, 255, 255, 0.72);
+  --bg-card: rgba(255, 255, 255, 0.385);
   --border-color: rgba(15, 23, 42, 0.08);
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --text-primary: #000000;
+  --text-secondary: #252222;
   --text-muted: #94a3b8;
   --accent-amber: #f59e0b;
   --accent-amber-strong: #b45309;
@@ -60,7 +60,8 @@ a {
   flex-wrap: wrap;
   gap: 0.6rem 1rem;
   padding: 0.9rem 1.75rem;
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(56, 48, 48, 0.78);
+  color:#f2f5f8;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -102,7 +103,7 @@ a {
   border-radius: 999px;
   font-size: 0.88rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: #f2f5f8;
 }
 
 .nav-link:hover {
@@ -264,7 +265,7 @@ a {
   padding: 1.1rem 1.5rem;
   text-align: center;
   background: var(--bg-card);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.155);
   box-shadow: 0 10px 34px rgba(15, 23, 42, 0.07);
   backdrop-filter: blur(12px);
   border-radius: 16px;
